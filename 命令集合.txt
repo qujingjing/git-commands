@@ -1,0 +1,71 @@
+#把工作时的所有变化提交到暂存区，包括文件内容修改(modified)以及新文件(new)，但不包括被删除的文件。$ git add . 
+
+
+#仅监控已经被add的文件,不会提交新文件（untracked file）$ git add -u
+
+
+#是上面两个功能的合集（git add --all的缩写）
+$ git add -A
+查看自己的用户名和邮箱地址：
+　　$ git config user.name
+　　$ git config user.email
+修改自己的用户名和邮箱地址：
+　　$ git config --global user.name "xxx"
+　　$ git config --global user.email "xxx"
+ 把这个目录变成git可以管理的仓库
+git init
+添加到暂存区里面去
+git add xxxx       git add .  （所有修改的文件)
+提交到仓库
+git commit -m '描述'    //实际上就是把暂存区的所有内容提交到当前分支上
+推送到远程仓库
+git push origin master    （如果远程库是空的，我们第一次推送master分支时，加上 –u参数    git push -u origin master）
+把一个已有的本地仓库与之关联，然后，把本地仓库的内容推送到GitHub仓库
+git remote add origin github地址
+从远程库克隆
+git clone github地址
+查看是否还有文件未提交
+git status
+创建分支
+git branch 分支1
+切换分支
+git checkout 分支1
+创建并切换分支
+git checkout -b 分支1
+查看所有分支
+git branch    //会列出所有的分支，当前分支前面会添加一个星号
+合并指定分支到当前分支上
+git merge 分支1
+删除分支
+git branch –d 分支1
+把当前工作现场 ”隐藏起来”（当当前分支进行到一半，还不能提交的时候，又接到了一个bug需要在2小时内修复，此时就需要隐藏当前未提交的工作现场，新建临时分支修复bug）
+git stash
+查看被隐藏的工作现场
+git stash list   //工作现场还在，Git把stash内容存在某个地方了
+恢复工作现场
+git stash apply   // 恢复后，stash内容并不删除，你需要使用命令git stash drop来删除。
+git stash pop    //恢复的同时把stash内容也删除了
+查看远程库的信息
+git remote
+查看远程库的详细信息
+git remote –v
+查看文件内容
+cat xxx
+看xxx文件到底改了什么内容
+git diff xxx
+查看历史记录(显示从最近到最远的显示日志)(如果嫌上面显示的信息太多的话，我们可以使用命令 git log –pretty=oneline)
+git log
+版本回退
+git reset  --hard HEAD^    	//回退到上一个版本
+git reset  --hard HEAD^^    //回退到上上个版本  依次类推
+git reset  --hard HEAD~100   //回退到前100个版本
+git reset  --hard 版本号      //通过版本号回退
+获取到版本号
+git reflog
+在未提交之前，恢复之前的版本
+1.如果我知道要删掉那些内容的话，直接手动更改去掉那些需要的文件，然后add添加到暂存区，最后commit掉。
+2.我可以按以前的方法直接恢复到上一个版本。使用 git reset  --hard HEAD^
+3.git checkout  -- xxx     //丢弃工作区的修改   (还没有添加到暂存区)
+删除已经提交的文件
+1.直接在文件目录中把文件删了
+2.rm xxx    (如果想彻底从版本库中删掉了此文件的话，可以再执行commit命令 提交掉)   //只要没有commit之前，如果我想在版本库中恢复此文件如何操作呢？可以使用如下命令 git checkout  -- xxx
